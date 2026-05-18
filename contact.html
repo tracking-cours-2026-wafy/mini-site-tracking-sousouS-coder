@@ -6,26 +6,33 @@
   <title>BiblioTech — Contact</title>
   <link rel="stylesheet" href="style.css" />
 
-  <!-- Tracking : config → push de page → loader -->
-  <script src="gtm-config.js"></script>
+  <!-- EXERCICE 1 — Colle ici le snippet GTM dans le <head> -->
+
+
+  <!-- dataLayer push : page_view -->
   <script>
+    window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({
       event: "page_view",
       page_type: "contact",
       page_title: "Contact",
     });
   </script>
-  <script src="gtm-loader.js"></script>
 </head>
 <body>
+
+  <!-- EXERCICE 1 — Colle ici le bloc <noscript> du conteneur GTM -->
+
 
   <header class="site-header">
     <a href="index.html" class="logo">BiblioTech</a>
     <nav class="nav">
       <a href="index.html">Accueil</a>
       <a href="produit.html">Produit</a>
-      <a href="panier.html">Panier</a>
+      <a href="panier.html">Panier <span id="cart-badge" class="cart-badge" hidden>0</span></a>
+      <a href="blog.html">Blog</a>
       <a href="contact.html" class="active">Contact</a>
+      <a href="exercices.html">Exercices</a>
     </nav>
   </header>
 
@@ -34,20 +41,32 @@
       <h1>Contacte-nous</h1>
       <p class="lede">Une question ? Écris-nous, on répond sous 24h.</p>
 
-      <form id="contact-form" class="form" novalidate>
+      <!--
+        Formulaire « vrai » :
+        - action="#" + method="post" → sémantique HTML correcte
+        - PAS de novalidate → la validation HTML5 native s'exécute
+        - GTM peut donc capter l'event submit avec « Check Validation »
+      -->
+      <form
+        id="contact-form"
+        name="contact-form"
+        class="form"
+        action="#"
+        method="post"
+      >
         <label>
           <span>Nom</span>
-          <input type="text" name="nom" required />
+          <input type="text" name="nom" id="contact-nom" required minlength="2" />
         </label>
 
         <label>
           <span>Email</span>
-          <input type="email" name="email" required />
+          <input type="email" name="email" id="contact-email" required />
         </label>
 
         <label>
           <span>Sujet</span>
-          <select name="sujet" required>
+          <select name="sujet" id="contact-sujet" required>
             <option value="">— Choisis un sujet —</option>
             <option value="commande">Question sur ma commande</option>
             <option value="produit">Question sur un produit</option>
@@ -57,7 +76,7 @@
 
         <label>
           <span>Message</span>
-          <textarea name="message" rows="5" required></textarea>
+          <textarea name="message" id="contact-message" rows="5" required minlength="10"></textarea>
         </label>
 
         <button type="submit" class="btn btn-primary">Envoyer</button>

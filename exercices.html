@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BiblioTech — Exercices</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- EXERCICE 1 — Colle ici le snippet GTM dans le <head> -->
+
+
+  <!-- dataLayer push : page_view -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: "page_view",
+      page_type: "exercises",
+      page_title: "Exercices",
+    });
+  </script>
+</head>
+<body>
+
+  <!-- EXERCICE 1 — Colle ici le bloc <noscript> du conteneur GTM -->
+
+
+  <header class="site-header">
+    <a href="index.html" class="logo">BiblioTech</a>
+    <nav class="nav">
+      <a href="index.html">Accueil</a>
+      <a href="produit.html">Produit</a>
+      <a href="panier.html">Panier <span id="cart-badge" class="cart-badge" hidden>0</span></a>
+      <a href="blog.html">Blog</a>
+      <a href="contact.html">Contact</a>
+      <a href="exercices.html" class="active">Exercices</a>
+    </nav>
+  </header>
+
+  <main class="narrow">
+
+    <section class="page-intro">
+      <p class="eyebrow">Cours Web Analytics</p>
+      <h1>10 exercices de tracking</h1>
+      <p class="lede">
+        Mets en pratique tes connaissances de GTM et GA4 sur le mini-site
+        BiblioTech. À chaque exercice : configure ton conteneur GTM,
+        publie une version, puis vérifie le résultat dans GTM Preview et
+        GA4 DebugView.
+      </p>
+      <div class="callout">
+        <strong>À lire avant de commencer.</strong> Le site contient déjà
+        des <code>dataLayer.push()</code> sur toutes les interactions clés
+        (page_view, view_item, add_to_cart, view_cart, begin_checkout,
+        purchase, click_cta, form_submit). <strong>Tu n'as quasiment rien
+        à coder</strong> — ton job est de configurer GTM pour exploiter
+        ces events. Seuls les exercices 1 et 8 demandent de toucher au
+        HTML.
+      </div>
+    </section>
+
+    <section class="exercise">
+      <p class="ex-num">Exercice 1</p>
+      <h2>Intégrer un script GTM</h2>
+      <p>
+        Crée ton conteneur GTM sur
+        <code>tagmanager.google.com</code>, puis copie-colle le code
+        d'installation dans <strong>chaque page HTML</strong> du site :
+      </p>
+      <ul>
+        <li>Le premier bloc dans le <code>&lt;head&gt;</code></li>
+        <li>Le second bloc juste après l'ouverture du <code>&lt;body&gt;</code></li>
+      </ul>
+      <p class="pre-label">Le bloc &lt;head&gt; à coller :</p>
+<pre><code>&lt;!-- Google Tag Manager --&gt;
+&lt;script&gt;(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-XXXXXX');&lt;/script&gt;
+&lt;!-- End Google Tag Manager --&gt;</code></pre>
+      <p class="hint">
+        Tu vas devoir coller ce code dans <strong>6 pages</strong>. Frustrant,
+        non ? Garde cette douleur en tête, on verra à la fin du cours
+        comment éviter cette duplication.
+      </p>
+    </section>
+
+    <section class="exercise">
+      <p class="ex-num">Exercice 2</p>
+      <h2>Tracker tous les clics</h2>
+      <p>
+        Configure ton conteneur GTM pour suivre <strong>tous les clics</strong>
+        sur la page d'accueil. Aucune modification de code, tout se passe
+        dans l'interface GTM.
+      </p>
+      <p class="hint">
+        Indice : déclencheur built-in « Click — All Elements », puis une
+        balise GA4 event avec un nom personnalisé.
+      </p>
+    </section>
+
+    <section class="exercise">
+      <p class="ex-num">Exercice 3</p>
+      <h2>Tracker uniquement le CTA 2</h2>
+      <p>
+        Affine ta balise précédente pour qu'elle ne se déclenche
+        <strong>QUE sur le bouton « CTA 2 »</strong> de la page d'accueil.
+        Le « CTA 1 » ne doit rien envoyer.
+      </p>
+      <div class="demo-ctas">
+        <button class="demo-btn">CTA 1</button>
+        <button class="demo-btn">CTA 2</button>
+      </div>
+      <p>Deux approches possibles :</p>
+      <ul>
+        <li>
+          a. Configure une variable GTM basée sur le <strong>texte
+          cliqué</strong> (Click Text)
+        </li>
+        <li>
+          b. Ou utilise un <strong>sélecteur CSS</strong>
+          <code>#cta-2</code> comme condition de déclencheur
+        </li>
+      </ul>
+    </section>
+
+    <section class="exercise">
+      <p class="ex-num">Exercice 4</p>
+      <h2>Tracker toutes les pages du site</h2>
+      <p>
+        Mets en place le suivi des pages vues sur les 6 pages : accueil,
+        produit, panier, confirmation, contact et blog.
+      </p>
+      <p>
+        Pour cet exercice, utilise le déclencheur <strong>« All Pages »</strong>
+        natif de GTM (basé sur l'event interne <code>gtm.js</code>),
+        <strong>pas</strong> l'event <code>page_view</code> custom du
+        dataLayer. C'est la méthode la plus simple et la plus rapide pour
+        démarrer.
+      </p>
+      <p class="hint">
+        Indice : balise « GA4 Configuration » ou « Google Tag », déclencheur
+        « All Pages ». Une seule balise suffit pour tout le site.
+      </p>
+    </section>
+
+    <section class="exercise">
+      <p class="ex-num">Exercice 5</p>
+      <h2>Tracker les CTA de la page d'accueil</h2>
+      <p>
+        Envoie un event à GA4 chaque fois qu'un visiteur clique sur l'un
+        des CTA de la home, en transmettant le <strong>nom du CTA</strong>
+        et sa <strong>position</strong>.
+      </p>
+      <p class="already-done">
+        Le site pousse déjà un event <code>click_cta</code> dans le
+        dataLayer à chaque clic. Inspecte <code>script.js</code> et le code
+        de <code>index.html</code> pour voir les paramètres disponibles
+        (<code>cta_name</code>, <code>cta_label</code>, <code>cta_position</code>).
+      </p>
+      <p class="hint">
+        Indice : déclencheur de type <strong>Custom Event</strong> avec
+        event name <code>click_cta</code>, variables dataLayer pour
+        récupérer les paramètres, puis une balise GA4 event.
+      </p>
+    </section>
+
+    <section class="exercise">
+      <p class="ex-num">Exercice 6</p>
+      <h2>Tracker la partie e-commerce</h2>
+      <p>
+        Implémente le suivi du tunnel d'achat dans GA4 avec les 5 events
+        e-commerce standards :
+      </p>
+      <ul>
+        <li><code>view_item</code> — page produit</li>
+        <li><code>add_to_cart</code> — clic sur « Ajouter au panier » ou « + » dans le panier</li>
+        <li><code>view_cart</code> — page panier</li>
+        <li><code>begin_checkout</code> — clic sur « Valider la commande »</li>
+        <li><code>purchase</code> — page de confirmation</li>
+      </ul>
+      <p class="already-done">
+        Les 5 events sont déjà poussés dans le dataLayer avec la structure
+        GA4 attendue (<code>currency</code>, <code>value</code>,
+        <code>items[]</code>, <code>transaction_id</code> pour purchase).
+        Le panier est dynamique : ajoute plusieurs fois le produit pour
+        voir les events <code>add_to_cart</code> et <code>remove_from_cart</code>
+        se déclencher avec les bonnes quantités.
+      </p>
+      <p class="hint">
+        Indice : crée 5 déclencheurs Custom Event (un par event), une variable
+        dataLayer <code>ecommerce</code>, et 5 balises GA4 event qui
+        transmettent l'objet ecommerce complet.
+      </p>
+    </section>
+
+    <section class="exercise">
+      <p class="ex-num">Exercice 7</p>
+      <h2>Tracker la soumission du formulaire</h2>
+      <p>
+        Envoie un event à GA4 chaque fois qu'un visiteur soumet le
+        formulaire de contact. Inclus le <strong>sujet sélectionné</strong>
+        dans les paramètres.
+      </p>
+      <p class="already-done">
+        Le formulaire est codé avec les bons attributs HTML
+        (<code>action</code>, <code>method</code>, pas de
+        <code>novalidate</code>). Tu as donc <strong>deux options</strong> :
+        utiliser le déclencheur natif « Form Submission » de GTM (qui capte
+        le submit natif), OU utiliser l'event custom
+        <code>form_submit</code> déjà poussé dans le dataLayer. Compare
+        les deux !
+      </p>
+    </section>
+
+    <section class="exercise">
+      <p class="ex-num">Exercice 8</p>
+      <h2>Ajouter un bandeau cookie</h2>
+      <p>
+        Installe un bandeau de consentement qui apparaît au premier passage
+        sur le site. Tant que l'utilisateur n'a pas cliqué sur
+        « Accepter », <strong>aucun tag marketing</strong> ne doit se
+        déclencher.
+      </p>
+      <p>
+        Cet exercice demande de modifier le code (HTML + JS pour le bandeau)
+        ET de configurer GTM pour respecter le consentement.
+      </p>
+      <p>
+        Bonus : utilise <strong>Google Consent Mode v2</strong> pour gérer
+        finement les états de consentement
+        (<code>ad_storage</code>, <code>analytics_storage</code>, etc.).
+      </p>
+    </section>
+
+    <section class="exercise">
+      <p class="ex-num">Exercice 9</p>
+      <h2>Installer le pixel Meta</h2>
+      <p>
+        Installe le pixel Meta (Facebook) via GTM et configure les events
+        principaux :
+      </p>
+      <ul>
+        <li><code>PageView</code> sur toutes les pages</li>
+        <li><code>ViewContent</code> sur la page produit</li>
+        <li><code>AddToCart</code> au clic d'ajout au panier</li>
+        <li><code>Purchase</code> sur la page de confirmation, avec
+            <code>value</code> et <code>currency</code></li>
+      </ul>
+      <p class="already-done">
+        Tu peux réutiliser les mêmes déclencheurs Custom Event que pour
+        l'exercice 6. Pas besoin de toucher au code, seulement à GTM.
+      </p>
+      <p class="hint">
+        Indice : crée un compte Meta Business Manager test, récupère ton
+        Pixel ID, et utilise les templates communautaires de la galerie
+        GTM pour gagner du temps.
+      </p>
+    </section>
+
+    <section class="exercise">
+      <p class="ex-num">Exercice 10</p>
+      <h2>Tracker le scroll sur la page blog</h2>
+      <p>
+        La page <a href="blog.html"><code>blog.html</code></a> contient un long
+        article de fond. Configure un déclencheur GTM
+        <strong>« Profondeur de défilement »</strong> qui envoie un event
+        GA4 à 25 %, 50 %, 75 % et 100 % de scroll.
+      </p>
+      <p class="hint">
+        Indice : déclencheur built-in « Scroll Depth » de GTM, type
+        Vertical, seuils en pourcentages. Ce déclencheur doit être limité à
+        la page blog uniquement (condition sur Page Path).
+      </p>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>© BiblioTech — Site pédagogique pour le cours Web Analytics</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

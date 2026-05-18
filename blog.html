@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BiblioTech — Les 7 KPIs que tout marketeur doit maîtriser</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- EXERCICE 1 — Colle ici le snippet GTM dans le <head> -->
+
+
+  <!-- dataLayer push : page_view -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: "page_view",
+      page_type: "blog",
+      page_title: "Les 7 KPIs que tout marketeur doit maîtriser",
+      article_category: "Web Analytics",
+    });
+  </script>
+</head>
+<body>
+
+  <!-- EXERCICE 1 — Colle ici le bloc <noscript> du conteneur GTM -->
+
+
+  <header class="site-header">
+    <a href="index.html" class="logo">BiblioTech</a>
+    <nav class="nav">
+      <a href="index.html">Accueil</a>
+      <a href="produit.html">Produit</a>
+      <a href="panier.html">Panier <span id="cart-badge" class="cart-badge" hidden>0</span></a>
+      <a href="blog.html" class="active">Blog</a>
+      <a href="contact.html">Contact</a>
+      <a href="exercices.html">Exercices</a>
+    </nav>
+  </header>
+
+  <main class="narrow">
+
+    <article class="blog-post">
+      <p class="eyebrow">Web Analytics · 12 min de lecture</p>
+      <h1>Les 7 KPIs que tout marketeur doit maîtriser en 2026</h1>
+      <p class="lede">
+        Mesurer la performance d'un site web sans connaître ses KPIs, c'est
+        comme conduire les yeux bandés. Voici les 7 indicateurs essentiels
+        pour piloter une stratégie digitale efficace.
+      </p>
+
+      <p>
+        Quand on débute en web analytics, on est rapidement noyé sous une
+        avalanche de métriques. GA4 affiche par défaut plus d'une centaine
+        d'indicateurs, et chaque outil (Mixpanel, Amplitude, Matomo) en
+        ajoute encore. Difficile de savoir où regarder en priorité.
+      </p>
+
+      <p>
+        Dans cet article, on revient aux fondamentaux : les 7 KPIs qui
+        permettent à eux seuls de comprendre 80 % de la performance d'un
+        site. Pas de jargon inutile, des définitions concrètes et des
+        seuils de référence par secteur.
+      </p>
+
+      <h2>1. Le taux de rebond (Bounce Rate)</h2>
+
+      <p>
+        Le taux de rebond mesure le pourcentage de visiteurs qui quittent
+        votre site sans effectuer la moindre interaction. Pendant des
+        années, il a été considéré comme un indicateur de qualité du
+        contenu : plus il est bas, mieux c'est, disait-on.
+      </p>
+
+      <p>
+        La réalité est plus nuancée. Un blog peut avoir un taux de rebond
+        de 80 % et être performant : le visiteur a lu l'article, a obtenu
+        sa réponse, et est reparti satisfait. Inversement, un site
+        e-commerce avec 70 % de rebond a probablement un problème de
+        conversion.
+      </p>
+
+      <p>
+        Depuis GA4, la définition a d'ailleurs changé : un « rebond » est
+        désormais une session sans event d'engagement, sans page vue
+        supplémentaire et de moins de 10 secondes. Ce qui rend l'indicateur
+        beaucoup plus fiable qu'avant.
+      </p>
+
+      <h2>2. La durée moyenne de session</h2>
+
+      <p>
+        La durée d'une session indique le temps passé par un visiteur sur
+        votre site, depuis sa première interaction jusqu'à son départ ou
+        son inactivité. C'est un proxy de l'engagement, mais il faut le
+        lire avec précaution.
+      </p>
+
+      <p>
+        Une session longue n'est pas forcément un bon signe : sur une page
+        de checkout, ça peut signaler une friction. Inversement, une
+        session courte sur une page d'information détaillée peut indiquer
+        un bon parcours UX où l'utilisateur trouve vite ce qu'il cherche.
+      </p>
+
+      <p>
+        Le bon réflexe : croiser cette métrique avec le taux de conversion
+        et la profondeur de session (nombre de pages vues par session)
+        pour avoir une vraie lecture.
+      </p>
+
+      <h2>3. Le taux de conversion</h2>
+
+      <p>
+        Le KPI roi du web analytics. Le taux de conversion mesure le
+        pourcentage de visiteurs qui réalisent l'action que vous attendez
+        d'eux : un achat, une inscription newsletter, un téléchargement,
+        un appel téléphonique.
+      </p>
+
+      <p>
+        Les benchmarks par secteur en 2026 :
+      </p>
+
+      <ul>
+        <li>E-commerce généraliste : 1,5 à 3 %</li>
+        <li>SaaS B2B : 5 à 7 % (essai gratuit)</li>
+        <li>Lead generation : 2 à 5 %</li>
+        <li>Médias et contenu : 8 à 15 % (newsletter)</li>
+      </ul>
+
+      <p>
+        Mais attention : un taux de conversion brut ne dit rien sans
+        contexte. Une augmentation du taux peut résulter d'une baisse du
+        trafic (moins de visiteurs, mais plus qualifiés), pas forcément
+        d'une amélioration du site. Il faut toujours regarder en valeur
+        absolue le nombre de conversions, en plus du pourcentage.
+      </p>
+
+      <h2>4. Le coût d'acquisition client (CAC)</h2>
+
+      <p>
+        Le CAC, c'est tout ce que vous dépensez pour attirer un nouveau
+        client : budget publicitaire, salaires des équipes marketing,
+        outils, contenus, le tout divisé par le nombre de clients acquis
+        sur la période.
+      </p>
+
+      <p>
+        Sans CAC, impossible de juger de la rentabilité d'une campagne.
+        Une campagne Meta Ads avec un beau ROAS de 5 peut être désastreuse
+        si vous incluez les frais cachés (création visuelle, gestion,
+        analytics).
+      </p>
+
+      <p>
+        Pour le calculer proprement, deux écoles existent. La première
+        n'intègre que les coûts média (CAC publicitaire). La seconde
+        intègre l'ensemble des coûts marketing (CAC complet). Selon votre
+        besoin de pilotage (tactique vs stratégique), choisissez l'une ou
+        l'autre, mais ne mélangez pas les deux.
+      </p>
+
+      <h2>5. La lifetime value (LTV)</h2>
+
+      <p>
+        La LTV représente la valeur totale qu'un client va générer sur la
+        durée de sa relation avec votre marque. C'est le pendant
+        indispensable du CAC : si votre LTV est inférieure à votre CAC,
+        votre business model est cassé.
+      </p>
+
+      <p>
+        Le ratio LTV / CAC est l'indicateur magique des investisseurs en
+        SaaS et e-commerce. Un ratio en dessous de 3 signale un problème
+        de rentabilité. Au-dessus de 5, vous pouvez sans doute investir
+        plus en acquisition pour accélérer.
+      </p>
+
+      <p>
+        Le calcul de la LTV est délicat parce qu'il dépend de paramètres
+        que vous estimez (durée moyenne de la relation, taux de rétention).
+        Soyez transparent sur les hypothèses, et faites des analyses de
+        sensibilité pour éviter les surprises.
+      </p>
+
+      <h2>6. Le taux d'attribution multi-touch</h2>
+
+      <p>
+        Aucun visiteur n'achète au premier contact. Un parcours type
+        comprend 5 à 12 points de contact avant la conversion : pub Meta,
+        recherche Google, newsletter, retargeting, bouche-à-oreille, etc.
+      </p>
+
+      <p>
+        L'attribution au dernier clic, par défaut dans la plupart des
+        outils, donne 100 % du crédit à la dernière source de trafic. Elle
+        sous-évalue systématiquement les canaux d'awareness (display,
+        social, SEO contenu) au profit des canaux de capture (search
+        branded, retargeting).
+      </p>
+
+      <p>
+        En 2026, GA4 propose plusieurs modèles : data-driven (basé sur le
+        machine learning), linéaire, basé sur la position. Aucun n'est
+        parfait, mais tous valent mieux que le dernier clic. Comparez vos
+        canaux avec deux modèles différents : si les écarts sont énormes,
+        vous avez un problème d'attribution à creuser.
+      </p>
+
+      <h2>7. Le NPS (Net Promoter Score)</h2>
+
+      <p>
+        Le seul KPI de cette liste qui ne se mesure pas dans GA4. Le NPS
+        demande à vos clients : « Sur une échelle de 0 à 10, quelle est la
+        probabilité que vous recommandiez notre marque à un proche ? ».
+      </p>
+
+      <p>
+        Le score se calcule en soustrayant le pourcentage de détracteurs
+        (0 à 6) au pourcentage de promoteurs (9 et 10). Le résultat va de
+        -100 à +100. Au-dessus de 50, vous avez une marque forte. Au-dessus
+        de 70, vous êtes dans le top mondial.
+      </p>
+
+      <p>
+        Pourquoi inclure un KPI déclaratif dans une liste sur le web
+        analytics ? Parce que les chiffres ne disent pas tout. Une bonne
+        performance digitale qui se traduit par un mauvais NPS est un
+        signal d'alerte fort : vous attirez des clients qui ne sont pas
+        les bons, ou votre produit ne tient pas ses promesses.
+      </p>
+
+      <h2>Comment piloter avec ces 7 KPIs ?</h2>
+
+      <p>
+        Le piège classique consiste à créer un dashboard avec ces 7
+        indicateurs et à le regarder une fois par mois. Erreur. Chaque KPI
+        a sa propre fréquence de pilotage.
+      </p>
+
+      <p>
+        Le taux de conversion et le CAC se suivent en hebdomadaire pour
+        détecter rapidement les dérives sur les campagnes. La LTV et le
+        NPS se suivent en trimestriel, parce qu'ils bougent peu et qu'un
+        signal sur 30 jours est rarement significatif. Le taux de rebond
+        et la durée de session, en mensuel suffit, sauf si vous lancez
+        une refonte.
+      </p>
+
+      <p>
+        Enfin, n'oubliez jamais : un KPI sans cible n'est qu'une métrique.
+        Pour chacun de ces indicateurs, fixez un objectif annuel, mesurez
+        l'écart chaque mois, et ajustez votre stratégie en conséquence.
+        C'est comme ça qu'on transforme la donnée en décision.
+      </p>
+
+      <hr />
+
+      <p class="muted">
+        <em>
+          Cet article est extrait du livre « Web Analytics pour débutants »
+          disponible dans notre boutique.
+        </em>
+        <a href="produit.html">Découvrir le livre →</a>
+      </p>
+
+    </article>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>© BiblioTech — Site pédagogique pour le cours Web Analytics</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

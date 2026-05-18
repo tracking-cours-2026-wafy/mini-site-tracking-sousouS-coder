@@ -6,37 +6,36 @@
   <title>BiblioTech — Accueil</title>
   <link rel="stylesheet" href="style.css" />
 
-  <!-- =========================================================
-       TRACKING — 3 blocs, dans cet ordre :
-       1. Config centralisée (ID GTM, dataLayer)
-       2. dataLayer push spécifique à cette page
-       3. Loader GTM (injecte le snippet head + le noscript body)
-       ========================================================= -->
+  <!-- ===============================================================
+       EXERCICE 1 — Colle ici le snippet GTM dans le <head>
+       (récupère le code depuis tagmanager.google.com)
+       =============================================================== -->
 
-  <!-- 1. Config -->
-  <script src="gtm-config.js"></script>
 
-  <!-- 2. dataLayer push : page_view -->
+  <!-- dataLayer push spécifique à la page : page_view -->
   <script>
+    window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({
       event: "page_view",
       page_type: "home",
       page_title: "Accueil",
     });
   </script>
-
-  <!-- 3. Loader -->
-  <script src="gtm-loader.js"></script>
 </head>
 <body>
+
+  <!-- EXERCICE 1 — Colle ici le bloc <noscript> du conteneur GTM -->
+
 
   <header class="site-header">
     <a href="index.html" class="logo">BiblioTech</a>
     <nav class="nav">
-      <a href="index.html">Accueil</a>
+      <a href="index.html" class="active">Accueil</a>
       <a href="produit.html">Produit</a>
-      <a href="panier.html">Panier</a>
+      <a href="panier.html">Panier <span id="cart-badge" class="cart-badge" hidden>0</span></a>
+      <a href="blog.html">Blog</a>
       <a href="contact.html">Contact</a>
+      <a href="exercices.html">Exercices</a>
     </nav>
   </header>
 
@@ -49,25 +48,29 @@
         et l'analyse marketing. Livraison sous 48h.
       </p>
 
-      <!-- CTA principal : à tracker en "click_cta" -->
-      <a
-        href="produit.html"
-        class="btn btn-primary"
-        data-cta="hero_voir_produit"
-        data-cta-position="hero"
-      >
-        Voir le produit phare →
-      </a>
+      <div class="cta-row">
+        <!-- CTA 1 -->
+        <a
+          href="produit.html"
+          class="btn btn-primary"
+          id="cta-1"
+          data-cta="cta_1"
+          data-cta-position="hero"
+        >
+          CTA 1
+        </a>
 
-      <!-- CTA secondaire : à tracker en "click_cta" -->
-      <a
-        href="contact.html"
-        class="btn btn-ghost"
-        data-cta="hero_contact"
-        data-cta-position="hero"
-      >
-        Nous contacter
-      </a>
+        <!-- CTA 2 -->
+        <a
+          href="contact.html"
+          class="btn btn-primary"
+          id="cta-2"
+          data-cta="cta_2"
+          data-cta-position="hero"
+        >
+          CTA 2
+        </a>
+      </div>
     </section>
 
     <section class="features">

@@ -6,49 +6,63 @@
   <title>BiblioTech — Commande confirmée</title>
   <link rel="stylesheet" href="style.css" />
 
-  <!-- Tracking : config → push de page → loader -->
-  <script src="gtm-config.js"></script>
+  <!-- EXERCICE 1 — Colle ici le snippet GTM dans le <head> -->
+
+
+  <!-- dataLayer push : purchase (lit le panier depuis localStorage) -->
   <script>
-    // ID de transaction généré aléatoirement pour simuler une vraie commande
-    var transactionId = "T-" + Math.floor(Math.random() * 1000000);
+    window.dataLayer = window.dataLayer || [];
+    (function () {
+      var cart = { items: [] };
+      try {
+        cart = JSON.parse(localStorage.getItem("cart")) || { items: [] };
+      } catch (e) {}
 
-    window.dataLayer.push({
-      event: "purchase",
-      page_type: "confirmation",
-      ecommerce: {
-        transaction_id: transactionId,
-        value: 29.90,
-        tax: 0,
-        shipping: 0,
-        currency: "EUR",
-        items: [{
-          item_id: "BOOK-001",
-          item_name: "Web Analytics pour débutants",
-          item_category: "Livres",
-          item_brand: "BiblioTech",
-          price: 29.90,
-          quantity: 1
-        }]
-      }
-    });
+      var value = cart.items.reduce(function (sum, item) {
+        return sum + item.price * item.quantity;
+      }, 0);
 
-    // Affiche l'ID de transaction à l'écran
-    document.addEventListener("DOMContentLoaded", function () {
-      var el = document.getElementById("transaction-id");
-      if (el) el.textContent = transactionId;
-    });
+      var transactionId = "T-" + Math.floor(Math.random() * 1000000);
+
+      // Stocke pour affichage et pour bloquer un double-push si refresh
+      window.__lastTransaction = {
+        id: transactionId,
+        value: Math.round(value * 100) / 100,
+        items: cart.items
+      };
+
+      window.dataLayer.push({
+        event: "purchase",
+        page_type: "confirmation",
+        ecommerce: {
+          transaction_id: transactionId,
+          value: Math.round(value * 100) / 100,
+          tax: 0,
+          shipping: 0,
+          currency: "EUR",
+          items: cart.items
+        }
+      });
+
+      // Vide le panier après l'achat
+      localStorage.removeItem("cart");
+    })();
   </script>
-  <script src="gtm-loader.js"></script>
 </head>
 <body>
+
+  <!-- EXERCICE 1 — Colle ici le bloc <noscript> du conteneur GTM -->
+
 
   <header class="site-header">
     <a href="index.html" class="logo">BiblioTech</a>
     <nav class="nav">
       <a href="index.html">Accueil</a>
       <a href="produit.html">Produit</a>
-      <a href="panier.html">Panier</a>
+      <a href="panier.html">Panier <span id="cart-badge" class="cart-badge" hidden>0</span></a>
+      <a href="blog.html">Blog</a>
       <a href="contact.html">Contact</a>
+      <a href="exercices.html">Exercices</a>
     </nav>
   </header>
 
@@ -57,8 +71,8 @@
       <div class="check">✓</div>
       <h1>Merci pour ta commande !</h1>
       <p class="lede">
-        Ta commande <strong id="transaction-id">T-000000</strong> a bien été
-        enregistrée. Tu vas recevoir un email de confirmation.
+        Ta commande <strong id="transaction-id">T-000000</strong> d'un montant de
+        <strong id="transaction-value">0,00 €</strong> a bien été enregistrée.
       </p>
       <a href="index.html" class="btn btn-ghost">Retour à l'accueil</a>
     </section>

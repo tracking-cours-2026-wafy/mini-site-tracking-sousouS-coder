@@ -6,63 +6,76 @@
   <title>BiblioTech — Panier</title>
   <link rel="stylesheet" href="style.css" />
 
-  <!-- Tracking : config → push de page → loader -->
-  <script src="gtm-config.js"></script>
+  <!-- EXERCICE 1 — Colle ici le snippet GTM dans le <head> -->
+
+
+  <!-- dataLayer push : view_cart (lit le panier depuis localStorage) -->
   <script>
-    window.dataLayer.push({
-      event: "view_cart",
-      page_type: "cart",
-      ecommerce: {
-        currency: "EUR",
-        value: 29.90,
-        items: [{
-          item_id: "BOOK-001",
-          item_name: "Web Analytics pour débutants",
-          item_category: "Livres",
-          item_brand: "BiblioTech",
-          price: 29.90,
-          quantity: 1
-        }]
-      }
-    });
+    window.dataLayer = window.dataLayer || [];
+    (function () {
+      var cart = { items: [] };
+      try {
+        cart = JSON.parse(localStorage.getItem("cart")) || { items: [] };
+      } catch (e) {}
+
+      var value = cart.items.reduce(function (sum, item) {
+        return sum + item.price * item.quantity;
+      }, 0);
+
+      window.dataLayer.push({
+        event: "view_cart",
+        page_type: "cart",
+        ecommerce: {
+          currency: "EUR",
+          value: Math.round(value * 100) / 100,
+          items: cart.items
+        }
+      });
+    })();
   </script>
-  <script src="gtm-loader.js"></script>
 </head>
 <body>
+
+  <!-- EXERCICE 1 — Colle ici le bloc <noscript> du conteneur GTM -->
+
 
   <header class="site-header">
     <a href="index.html" class="logo">BiblioTech</a>
     <nav class="nav">
       <a href="index.html">Accueil</a>
       <a href="produit.html">Produit</a>
-      <a href="panier.html" class="active">Panier</a>
+      <a href="panier.html" class="active">Panier <span id="cart-badge" class="cart-badge" hidden>0</span></a>
+      <a href="blog.html">Blog</a>
       <a href="contact.html">Contact</a>
+      <a href="exercices.html">Exercices</a>
     </nav>
   </header>
 
   <main>
     <section class="cart">
-      <h1>Ton panier</h1>
-
-      <div class="cart-item">
-        <div class="cart-item-cover">WA</div>
-        <div class="cart-item-info">
-          <h3>Web Analytics pour débutants</h3>
-          <p class="muted">Quantité : 1</p>
-        </div>
-        <p class="cart-item-price">29,90 €</p>
+      <div class="cart-header">
+        <h1>Ton panier</h1>
+        <button id="clear-cart-btn" class="btn-link" hidden>Vider le panier</button>
       </div>
 
-      <div class="cart-summary">
-        <div class="line"><span>Sous-total</span><span>29,90 €</span></div>
-        <div class="line"><span>Livraison</span><span>Gratuite</span></div>
-        <div class="line total"><span>Total</span><span>29,90 €</span></div>
+      <!-- État vide -->
+      <div id="cart-empty" class="cart-empty" hidden>
+        <p>Ton panier est vide pour le moment.</p>
+        <a href="produit.html" class="btn btn-primary">Découvrir le produit</a>
+      </div>
 
-        <!-- Bouton checkout : déclenche begin_checkout puis redirige -->
+      <!-- Liste des items (rendue par JS) -->
+      <div id="cart-items"></div>
+
+      <!-- Résumé -->
+      <div id="cart-summary" class="cart-summary" hidden>
+        <div class="line"><span>Sous-total</span><span id="subtotal">0,00 €</span></div>
+        <div class="line"><span>Livraison</span><span>Gratuite</span></div>
+        <div class="line total"><span>Total</span><span id="total">0,00 €</span></div>
+
         <button
           id="checkout-btn"
           class="btn btn-primary"
-          data-cart-value="29.90"
         >
           Valider la commande
         </button>

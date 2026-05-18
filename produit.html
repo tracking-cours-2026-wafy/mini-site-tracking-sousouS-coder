@@ -6,9 +6,12 @@
   <title>BiblioTech — Produit</title>
   <link rel="stylesheet" href="style.css" />
 
-  <!-- Tracking : config → push de page → loader -->
-  <script src="gtm-config.js"></script>
+  <!-- EXERCICE 1 — Colle ici le snippet GTM dans le <head> -->
+
+
+  <!-- dataLayer push : view_item -->
   <script>
+    window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({
       event: "view_item",
       page_type: "product",
@@ -26,17 +29,21 @@
       }
     });
   </script>
-  <script src="gtm-loader.js"></script>
 </head>
 <body>
+
+  <!-- EXERCICE 1 — Colle ici le bloc <noscript> du conteneur GTM -->
+
 
   <header class="site-header">
     <a href="index.html" class="logo">BiblioTech</a>
     <nav class="nav">
       <a href="index.html">Accueil</a>
       <a href="produit.html" class="active">Produit</a>
-      <a href="panier.html">Panier</a>
+      <a href="panier.html">Panier <span id="cart-badge" class="cart-badge" hidden>0</span></a>
+      <a href="blog.html">Blog</a>
       <a href="contact.html">Contact</a>
+      <a href="exercices.html">Exercices</a>
     </nav>
   </header>
 
@@ -66,6 +73,7 @@
           data-item-name="Web Analytics pour débutants"
           data-item-price="29.90"
           data-item-category="Livres"
+          data-item-brand="BiblioTech"
         >
           Ajouter au panier
         </button>

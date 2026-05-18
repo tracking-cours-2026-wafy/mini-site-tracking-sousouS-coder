@@ -1,84 +1,63 @@
-# BiblioTech — Site pédagogique Web Analytics (v2)
+# BiblioTech — Site pédagogique Web Analytics
 
-Mini-site pour apprendre **Google Tag Manager** et le tracking côté front.
+Mini-site e-commerce pour apprendre **Google Tag Manager** et le tracking côté front.
 
-## 🆕 Nouveauté de cette version : GTM chargé dynamiquement
+## 🎯 Ton objectif
 
-Tu remarqueras qu'on **ne colle PAS le snippet GTM dans chaque fichier HTML**.
-À la place, on a :
+Configurer GTM (et GA4) pour capter toutes les interactions du site.
+**Quasiment aucune ligne de code à écrire** — le site pousse déjà tous
+les events dans le `dataLayer`. Ton travail est de configurer GTM pour
+les exploiter.
 
-| Fichier            | Rôle                                                          |
-|--------------------|---------------------------------------------------------------|
-| `gtm-config.js`    | Contient **uniquement** ton ID GTM. C'est le seul à modifier. |
-| `gtm-loader.js`    | Injecte le snippet GTM dans `<head>` et le `<noscript>` dans `<body>`. À ne pas modifier. |
+➡️ **Va sur la page [Exercices](exercices.html) pour la liste des 10 missions.**
 
-Chaque page HTML appelle ces deux scripts en 2 lignes :
+## Structure du site
 
-```html
-<script src="gtm-config.js"></script>
-<script>/* dataLayer push spécifique à la page */</script>
-<script src="gtm-loader.js"></script>
+| Page                | Contenu                                    | Events dataLayer                                |
+|---------------------|--------------------------------------------|--------------------------------------------------|
+| `index.html`        | Accueil, 2 CTAs (CTA 1 / CTA 2)            | `page_view`, `click_cta`                        |
+| `produit.html`      | Fiche produit, bouton ajout panier         | `view_item`, `add_to_cart`                      |
+| `panier.html`       | Panier dynamique (localStorage), +/- /vider | `view_cart`, `add_to_cart`, `remove_from_cart`, `begin_checkout` |
+| `confirmation.html` | Récap commande, vide le panier             | `purchase`                                       |
+| `contact.html`      | Formulaire (validation HTML5 native)       | `page_view`, `form_submit`                      |
+| `blog.html`         | Long article pour scroll tracking          | `page_view`                                      |
+| `exercices.html`    | Les 10 missions du cours                   | `page_view`                                      |
+
+## Panier dynamique
+
+Le panier est persistant via `localStorage` :
+
+- Cliquer plusieurs fois sur « Ajouter au panier » incrémente la quantité
+- Sur la page panier : boutons +/-, suppression d'une ligne, vider le panier
+- Chaque action déclenche un event GA4 e-commerce (`add_to_cart`, `remove_from_cart`)
+- Le `value` et le tableau `items[]` reflètent toujours l'état réel du panier
+- À l'achat, l'event `purchase` est poussé puis le panier est vidé
+
+## Formulaire
+
+Le formulaire de contact est codé proprement :
+
+- Attributs `action` et `method` présents
+- Validation HTML5 native (`required`, `minlength`, `type="email"`) — pas de `novalidate`
+- Le submit event ne fire que si la validation passe → GTM peut donc utiliser
+  le déclencheur natif **« Form Submission »**
+- En plus, un event `form_submit` custom est poussé dans le dataLayer
+
+Cela permet aux élèves de comparer les deux approches dans GTM.
+
+## Mise en route
+
+1. **Active GitHub Pages** : Settings → Pages → branch `main`, root → Save
+2. **Ouvre `exercices.html`** dans le navigateur via l'URL GitHub Pages
+3. **Commence par l'exercice 1** : coller le snippet GTM dans toutes les pages
+
+## Inspecter le dataLayer
+
+Une fois sur n'importe quelle page, ouvre la console DevTools et tape :
+
+```javascript
+window.dataLayer
 ```
 
-**Pourquoi ?** Parce que dans la vraie vie un développeur ne va jamais copier-coller
-le snippet GTM dans 50 pages. Il le centralise dans un template, un composant React,
-un layout Jekyll, un partial Hugo, un include PHP… Ici on simule ça en JS pur
-puisque GitHub Pages est un hébergement statique.
-
-## Activer GitHub Pages
-
-1. Onglet **Settings** du repo → **Pages**
-2. Source : **Deploy from a branch** → main → `/ (root)`
-3. **Save**, attends 1-2 minutes, l'URL apparaît en haut.
-
-## Installer ton GTM
-
-1. Crée ton conteneur sur https://tagmanager.google.com
-2. Copie ton ID `GTM-XXXXXX`
-3. Ouvre **`gtm-config.js`** dans GitHub (icône crayon ✏️)
-4. Remplace `GTM-XXXXXX` par ton vrai ID
-5. **Commit changes**
-6. C'est fini. Tous les fichiers HTML chargent GTM automatiquement.
-
-Si tu oublies cette étape, le loader affiche un warning dans la console
-du navigateur : *"[GTM] Aucun ID GTM configuré"*.
-
-## Les événements en place
-
-| Page                | Événements dataLayer                 |
-|---------------------|---------------------------------------|
-| `index.html`        | `page_view`, `click_cta`              |
-| `produit.html`      | `view_item`, `add_to_cart`            |
-| `panier.html`       | `view_cart`, `begin_checkout`         |
-| `confirmation.html` | `purchase`                            |
-| `contact.html`      | `page_view`, `form_submit`            |
-
-## Architecture du tracking
-
-```
-┌─────────────────────────────────────────────┐
-│  Chaque page HTML                           │
-│  ┌─────────────────────────────────────┐    │
-│  │ 1. gtm-config.js                    │    │
-│  │    → init dataLayer + GTM_ID        │    │
-│  ├─────────────────────────────────────┤    │
-│  │ 2. <script> push spécifique         │    │
-│  │    → page_view, view_item, etc.     │    │
-│  ├─────────────────────────────────────┤    │
-│  │ 3. gtm-loader.js                    │    │
-│  │    → injecte GTM <head> + <body>    │    │
-│  └─────────────────────────────────────┘    │
-│                                             │
-│  script.js (event listeners)                │
-│    → click_cta, add_to_cart, form_submit,   │
-│       begin_checkout                        │
-└─────────────────────────────────────────────┘
-```
-
-## Exercices possibles
-
-- Créer un déclencheur GTM sur chaque événement et l'envoyer à GA4
-- Modifier `gtm-config.js` pour gérer un second ID (env. test vs prod)
-- Ajouter un événement `scroll_50_percent` dans `script.js`
-- Configurer le Consent Mode v2 dans `gtm-loader.js`
-- Bonus : remplacer le loader JS par un include Jekyll (`_includes/gtm.html`) pour voir un autre pattern de centralisation
+Tu verras tous les events poussés. Sur la page panier, navigue avec les boutons
++/- pour voir les events `add_to_cart` / `remove_from_cart` arriver en temps réel.
